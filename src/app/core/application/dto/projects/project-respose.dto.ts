@@ -9,8 +9,8 @@ export interface IProject {
     id:          number;
     title:       string;
     description: string;
-    startDate:   Date;
-    endDate:     Date;
+    startDate:   string;
+    endDate:     string;
     isActive:    boolean;
     organizer:   Organizer;
 }
@@ -28,6 +28,6 @@ export interface Metadata {
     totalItems:   number;
     itemCount:    number;
     itemsPerPage: number;
-    totalPages:   number;
+    totalPages:   number;   
     currentPage:  number;
 }

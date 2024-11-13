@@ -1,12 +1,14 @@
 
-import NavBar from '@/UI/molecules/NavBar'
+import { ProjectsService } from '@/app/infractrusture/services/projects.service'
+import TableTemplate from '@/UI/template/TableTemplate'
 import React from 'react'
 
+const useProjectsService = new ProjectsService()
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const data = await useProjectsService.findAll()
+
   return (
-    <div>
-      <NavBar />
-    </div>
+    <TableTemplate data={data} />
   )
 }

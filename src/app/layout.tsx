@@ -17,7 +17,7 @@ export default function RootLayout({
       <body
         className="bg-gradient-to-b from-blue-200 to-white w-full"
       >
-                <AuthProvider >{children} </AuthProvider>
+        <AuthProvider >{children} </AuthProvider>
       </body>
     </html>
   );

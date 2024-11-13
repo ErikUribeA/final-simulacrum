@@ -11,13 +11,13 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="bg-white h-screen p-4 space-y-6 w-full">
+        <div className="bg-white p-4 space-y-6 w-full h-full">
             {/* Sidebar Header */}
             <div className="text-2xl font-bold text-black">VolunteerConnect</div>
 
             {/* Navigation Links */}
             <nav className="space-y-4">
-                <Link href="#" className="flex gap-2 items-center hover:bg-gray-200 p-2 rounded">
+                <Link href="#" className="flex gap-2 items-center bg-gray-200 hover:bg-gray-200 p-2 rounded">
                     <FaRegFolderOpen className="text-[1.4em]" />
                     Proyectos
                 </Link>
