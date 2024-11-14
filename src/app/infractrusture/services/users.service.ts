@@ -26,9 +26,6 @@ export class UserService {
 
             const response = await fetch(`/api/projects/create/projects`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify(service),
             });
             if (!response.ok) {
@@ -53,7 +50,7 @@ export class UserService {
             try {
                 const response = await fetch(`/api/services/destroy/services/${id}`, {
                     method: 'DELETE',
-                    headers: {
+                    headezrs: {
                         'Content-Type': 'application/json',
                     }
                 });

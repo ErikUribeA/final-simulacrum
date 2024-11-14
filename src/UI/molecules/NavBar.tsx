@@ -19,6 +19,33 @@ export default function NavBar({ onAdd }: NavBarProps) {
 
     const user = session.user;
 
+    const handleDownloadReport = async () => {
+        const token = session?.user?.token;
+        try {
+            const response = await fetch("/api/projects/report/download", {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Error downloading report");
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "reporte_proyectos.xlsx";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } catch (error) {
+            console.error("Error downloading report:", error);
+        }
+    };
+
     return (
         <div className="w-full flex justify-between items-center p-3 bg-white">
             <div className="flex">
@@ -32,6 +59,7 @@ export default function NavBar({ onAdd }: NavBarProps) {
                         gap: "8px",
                         "&:hover": { backgroundColor: "black" },
                     }}
+                    onClick={handleDownloadReport}
                 >
                     <FaRegFileZipper className="text-[1.2em]" />
                     Descargar Reporte

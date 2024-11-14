@@ -16,3 +16,18 @@ export interface IUser {
 export enum Role {
     Organizer = "organizer",
 }
+
+
+export interface IResponseRegister {
+    statusCode: number;
+    message:    string;
+    data:       Data;
+}
+
+export interface Data {
+    email: string;
+    name:  string;
+    role:  string;
+    photo: null;
+    id:    number;
+}
