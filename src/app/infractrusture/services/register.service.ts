@@ -1,5 +1,5 @@
-import { IResponseRegister } from "@/app/core/application/dto";
-import { HttpClient } from "../utils/client-http2";
+import { IRegisterResponse } from "@/app/core/application/dto/auth";
+import { HttpClient } from "../utils/httpClient";
 
 export class RegisterService {
     private clientHttp: HttpClient;
@@ -8,12 +8,13 @@ export class RegisterService {
         this.clientHttp = new HttpClient();
     }
 
-    async register(req: FormData): Promise<IResponseRegister>{
+    async register(req: FormData): Promise<IRegisterResponse>{
         const formData = true;
-        return await this.clientHttp.post<IResponseRegister, FormData>(
+        return await this.clientHttp.post<IRegisterResponse, FormData>(
             "users",
             req,
             formData
         )
     }
 }
+  

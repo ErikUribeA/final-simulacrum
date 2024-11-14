@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     const registerService = new RegisterService();
     try {
         const formData = await req.formData();  
-        const newUser = await registerService.register(formData);
+        const newUser = registerService.register(formData);
 
         return NextResponse.json(newUser, { status: 200 });
     } catch (error) {
