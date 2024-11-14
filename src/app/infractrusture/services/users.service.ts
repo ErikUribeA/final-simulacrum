@@ -1,16 +1,17 @@
-import { IPostProject, IResponsProjects } from "@/app/core/application/dto";
+import { IPostProject, IResponseUser} from "@/app/core/application/dto";
 import { HttpClient } from "../utils/client-http";
 
-export class ProjectsService {
+
+export class UserService {
     private httpClient: HttpClient;
 
     constructor() {
         this.httpClient = new HttpClient()
     }
 
-    async findAll(page: number, size: number): Promise<IResponsProjects> {
+    async findAll(): Promise<IResponseUser> {
         try {
-            const response = await this.httpClient.get<IResponsProjects>(`projects?page=${page}&size=${size}`);
+            const response = await this.httpClient.get<IResponseUser>(`users`);
             return response;
         } catch (error) {
             console.log(error);
@@ -46,10 +47,11 @@ export class ProjectsService {
         }
     }
 
+    /* 
         
         async destroy(id: number) {
             try {
-                const response = await fetch(`/api/projects/destroy/projects/${id}`, {
+                const response = await fetch(`/api/services/destroy/services/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -67,7 +69,6 @@ export class ProjectsService {
             }
         }
     
-    /* 
         async save(service: IPostService, id: number) {
             try {
                 const response = await fetch(`/api/services/save/services/${id}`, {

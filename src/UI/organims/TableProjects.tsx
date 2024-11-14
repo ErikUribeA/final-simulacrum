@@ -1,43 +1,16 @@
 'use client'
 import { IProject } from '@/app/core/application/dto';
 import { Button, Input } from '@mui/joy';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './styles/table.sass';
-import { IoMdArrowDropleftCircle } from "react-icons/io";
-import { IoMdArrowDroprightCircle } from "react-icons/io";
-
-
 
 interface TableProps {
     data: IProject[];
+    onEdit: (id: number, data: IProject[]) => void;  // Añadir el tipo correcto para 'id' si es necesario
+    onDelete: (id: number) => void;
 }
 
-export default function TableProjects({ data }: TableProps) {
-    // Estado de paginación
-    const [currentPage, setCurrentPage] = useState(1);
-    const [projects, setProjects] = useState<IProject[]>([]);
-    const itemsPerPage = 5;
-
-    const indexOfLastProject = currentPage * itemsPerPage;
-    const indexOfFirstProject = indexOfLastProject - itemsPerPage;
-    const currentProjects = data.slice(indexOfFirstProject, indexOfLastProject);
-
-    useEffect(() => {
-        setProjects(currentProjects);
-    }, [currentPage, currentProjects, data]);
-
-    const handleNextPage = () => {
-        if (currentPage < Math.ceil(data.length / itemsPerPage)) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
+export default function TableProjects({ data, onEdit, onDelete }: TableProps) {
     return (
         <div className="m-5 bg-white flex flex-col gap-8 rounded-md">
             <div className="px-8 pt-6">
@@ -47,20 +20,6 @@ export default function TableProjects({ data }: TableProps) {
             {/* Parte de búsqueda */}
             <div className="px-8 flex justify-between">
                 <Input placeholder="Buscar Proyectos..." sx={{ width: '37%', padding: '10px' }} />
-                <div className="flex justify-center gap-4 pt-4 items-center">
-                    <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                        <IoMdArrowDropleftCircle className='text-[2em]' />
-                    </button>
-                    <span>{`Página ${currentPage} de ${Math.ceil(data.length / itemsPerPage)}`}</span>
-                    <button
-                        onClick={handleNextPage}
-                        disabled={currentPage === Math.ceil(data.length / itemsPerPage)}
-                        className={`isDisabled ? ' `}
-                    >
-                        <IoMdArrowDroprightCircle className='text-[2em]' />
-
-                    </button>
-                </div>
             </div>
 
             {/* Tabla */}
@@ -77,7 +36,7 @@ export default function TableProjects({ data }: TableProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    {projects.map((project, index) => (
+                    {data.map((project, index) => (
                         <tr
                             key={index}
                             className="block md:table-row border-b-[1px] border-gray-200 p-4"
@@ -111,10 +70,10 @@ export default function TableProjects({ data }: TableProps) {
                             <td className="Td" data-label="Acciones">
                                 <span className="Span">Acciones:</span>
                                 <div className="flex gap-2">
-                                    <Button variant="outlined" color="neutral">
+                                    <Button variant="outlined" color="neutral" onClick={() => onEdit(project.id, data)}>
                                         Editar
                                     </Button>
-                                    <Button variant="soft" color="danger">
+                                    <Button variant="soft" color="danger" onClick={() => onDelete(project.id)}>
                                         Eliminar
                                     </Button>
                                 </div>
@@ -123,9 +82,6 @@ export default function TableProjects({ data }: TableProps) {
                     ))}
                 </tbody>
             </table>
-
-            {/* Paginación */}
-
         </div>
     );
 }

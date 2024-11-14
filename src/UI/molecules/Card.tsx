@@ -8,7 +8,7 @@ interface CardProps {
 
 export default function Card({ data, title, icon }: CardProps) {
     return (
-        <div className='bg-white p-5 rounded-md'>
+        <div className='bg-white p-5 rounded-md shadow-lg'>
             <div className='flex justify-between'>
                 <h3>{title}</h3>
                 <span>{icon}</span>
