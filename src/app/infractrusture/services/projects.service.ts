@@ -67,11 +67,10 @@ export class ProjectsService {
             }
         }
     
-    /* 
-        async save(service: IPostService, id: number) {
+        async save(service: IPostProject, id: number) {
             try {
-                const response = await fetch(`/api/services/save/services/${id}`, {
-                    method: 'PUT',
+                const response = await fetch(`/api/projects/save/projects/${id}`, {
+                    method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -89,5 +88,5 @@ export class ProjectsService {
                 console.error(error);
                 throw error;
             }
-        } */
+        } 
 }

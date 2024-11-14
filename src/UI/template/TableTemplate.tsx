@@ -8,6 +8,8 @@ import { ProjectModal } from '@/UI/molecules/NewProject';
 import NavBarClient from '../molecules/NavBar';
 import { ProjectsService } from '@/app/infractrusture/services/projects.service';
 import Pagination from '../molecules/Pagination';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 interface dataProps {
     dataP: IResponsProjects;
@@ -16,9 +18,12 @@ interface dataProps {
 
 export default function TableTemplate({ dataP, dataU }: dataProps) {
     const [selectedProject, setSelectedProject] = useState<IPostProject | null>(null);
+    const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null); // Guardar el id del proyecto seleccionado
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const useProjectsService = new ProjectsService()
+    const router = useRouter();
+
+    const useProjectsService = new ProjectsService();
 
     const handleOpenModal = (id?: number) => {
         if (id) {
@@ -31,9 +36,11 @@ export default function TableTemplate({ dataP, dataU }: dataProps) {
                     endDate: project.endDate,
                 };
                 setSelectedProject(projectData);
+                setSelectedProjectId(id); // Guardar el id del proyecto seleccionado
             }
         } else {
             setSelectedProject(null);
+            setSelectedProjectId(null); // Resetear el id si no hay proyecto
         }
         setIsModalOpen(true);
     };
@@ -41,44 +48,55 @@ export default function TableTemplate({ dataP, dataU }: dataProps) {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedProject(null);
+        setSelectedProjectId(null); // Resetear el id al cerrar el modal
     };
 
     const handleSubmit = async (formData: IPostProject) => {
         try {
-            if (selectedProject) {
-                console.log(formData);
+            if (selectedProjectId) {
+                // Enviar el id en la petición al actualizar
+                await useProjectsService.save(formData, selectedProjectId);
+                console.log("Project updated successfully");
+                toast.success("The project was updated")
+                router.refresh()
             } else {
-                await useProjectsService.create(formData)
-                console.log("Project saved successfully");
+                // Crear un nuevo proyecto si no hay id
+                await useProjectsService.create(formData);
+                console.log("Project created successfully");
+                toast.success("The project was created")
+                router.refresh()
             }
         } catch (error) {
             console.error("Error saving project:", error);
+            toast.error("Error saving project")
         }
     };
 
     const handleDelete = async (id: number) => {
         try {
-            await useProjectsService.destroy(id)
+            await useProjectsService.destroy(id);
             console.log("Project deleted successfully");
-            // Update the project list
+            toast.success("The project was deleted")
+            router.refresh() // Actualiza la página para ver los cambios en tiempo real (sin recargar la página completa)  // Requiere Next.js 11.0.0+  // Requiere react-router-dom 6.0.0+  // Para ver los cambios en tiempo real, puede utilizar el hook useRouter().refresh() en lugar de router.refresh()  // Nota: Este hook no funcionará con Next
         } catch (error) {
-            console.error("Error deleting project:", error);    
+            console.error("Error deleting project:", error);
+            toast.error("Error deleting project")
         }
     };
 
     return (
         <div className='mb-4'>
             <NavBarClient onAdd={() => handleOpenModal()} />
-            <ContainerCard dataP={dataP} dataU={dataU.data}/>
+            <ContainerCard dataP={dataP} dataU={dataU.data} />
             <TableProjects
                 data={dataP.data}
-                onEdit={(id) => handleOpenModal(id)}
-                onDelete={handleDelete}
+                onEdit={(id) => handleOpenModal(id)} // Llama a handleOpenModal con el id
+                onDelete={handleDelete} // Pasa el id al eliminar
             />
             <ProjectModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit} // handleSubmit ahora maneja correctamente el id
                 initialData={selectedProject}
             />
             <Pagination data={dataP} />
