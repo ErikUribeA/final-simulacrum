@@ -79,7 +79,7 @@ export default function TableProjects({ data, onEdit, onDelete }: TableProps) {
     }, [searchQuery, handleSearch]); // Incluimos handleSearch como dependencia
     
     return (
-        <div className="m-5 bg-white flex flex-col gap-8 rounded-md">
+        <div className="m-5 bg-white flex flex-col gap-8 rounded-md shadow-lg">
             <div className="px-8 pt-6">
                 <h2 className="font-bold text-[1.4em]">Lista de Proyectos</h2>
             </div>

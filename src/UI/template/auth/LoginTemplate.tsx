@@ -7,12 +7,13 @@ export const LoginTemplate = () => {
         <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white flex flex-col">
             {/* Header */}
             <header className="p-4">
-                <Button
-                    variant="plain"
-                    sx={{ fontSize: "1.2em" }}
-                >
-                    Volver al inicio
-                </Button>
+                <Link href="/" >
+                    <Button
+                        variant="plain"
+                        sx={{ fontSize: "1.2em" }}
+                    >
+                        Volver al inicio
+                    </Button></Link>
             </header>
 
             {/* Main Content */}

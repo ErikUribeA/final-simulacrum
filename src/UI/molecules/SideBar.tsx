@@ -6,9 +6,6 @@ import { FaRegFolderOpen } from "react-icons/fa6";
 import { PiSignOutBold } from "react-icons/pi";
 
 const Sidebar = () => {
-    const handleLogout = () => {
-        signOut();
-    };
 
     return (
         <div className="bg-white p-4 space-y-6 w-full h-full">
@@ -22,7 +19,7 @@ const Sidebar = () => {
                     Proyectos
                 </Link>
                 <button
-                    onClick={handleLogout}
+                    onClick={() => signOut({ callbackUrl: '/' })}
                     className="flex gap-2 items-center hover:bg-gray-200 p-2 rounded bg-transparent border-none text-black"
                 >
                     <PiSignOutBold className="text-[1.4em]" />

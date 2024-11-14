@@ -11,7 +11,7 @@ export default function Component() {
         </div>
         <div className="flex gap-2 ">
           <Link href="/login"><Button sx={{ "color": "black", "fontSize": "1em" }} variant="plain"> Iniciar session </Button></Link>
-          <Link href="/login"><Button
+          <Link href="/register"><Button
             sx={{
               "color": "white", "bgcolor": "black", "fontSize": "1em",
               "&: hover": {
@@ -30,18 +30,20 @@ export default function Component() {
           diferencia en tu  comunidad.
         </p>
         <div className="flex gap-4">
+          <Link href="/login" >
           <Button size="lg" sx={{
             "bgcolor": "black",
             "&: hover": {
               backgroundColor: 'black'
             }
-          }} > Explora Proyectos </Button>
+          }} > Explora Proyectos </Button></Link>
+          <Link href="/login">
           <Button size="lg" sx={{
             "bgcolor": "white", "color": "black",
             "&: hover": {
               backgroundColor: 'white'
             }
-          }} > Comenzar como organizador </Button>
+          }} > Comenzar como organizador </Button></Link>
         </div>
       </main>
 

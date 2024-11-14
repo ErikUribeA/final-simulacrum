@@ -6,6 +6,8 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@mui/joy";
+import { CloudUploadIcon } from "lucide-react";
 
 interface IRegisterRequest {
     email: string;
@@ -161,27 +163,34 @@ export const RegisterForm = () => {
                     <label htmlFor="photo" className="block text-sm font-medium">
                         Foto de Perfil
                     </label>
-                    <input
-                        type="file"
-                        accept="image/jpeg, image/png"
-                        onChange={(e) => {
-                            const file = e.target.files?.[0];
-                            setValue("photo", file);
-                        }}
-                        className="block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-gray-200 hover:file:bg-gray-300"
-                    />
+                    <Button
+                        component="label" // Permite usar la etiqueta `label`
+                        variant="soft"
+                    >
+                        <CloudUploadIcon className="mr-2" />
+                        Subir Foto
+                        <input
+                            type="file"
+                            accept="image/jpeg, image/png"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                setValue("photo", file); // Asignar archivo al formulario
+                            }}
+                            className="hidden" // Oculta el input real
+                        />
+                    </Button>
                     {errors.photo && (
                         <p className="text-sm text-red-500">{errors.photo.message}</p>
                     )}
                 </div>
 
-                <button
-                    type="submit"
-                    className="w-full py-2 px-4 bg-black text-white rounded-lg font-medium hover:bg-gray-600"
-                >
-                    Registrarse
-                </button>
-            </form>
+            <button
+                type="submit"
+                className="w-full py-2 px-4 bg-black text-white rounded-lg font-medium hover:bg-gray-600"
+            >
+                Registrarse
+            </button>
+        </form >
         </>
     );
 };

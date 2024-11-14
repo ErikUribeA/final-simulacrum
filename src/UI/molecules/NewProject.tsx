@@ -174,7 +174,7 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
                         disabled={isLoading}
                         className={`w-full py-2 px-4 rounded-md text-white font-medium ${isLoading
                             ? "bg-blue-400 cursor-not-allowed"
-                            : "bg-blue-500 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            : "bg-black hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                             } transition-colors`}
                     >
                         {isLoading ? "Saving..." : initialData ? "Save Changes" : "Add Service"}
