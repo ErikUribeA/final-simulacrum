@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 const loginSchema = yup.object().shape({
@@ -45,13 +46,13 @@ export const LoginForm = () => {
                 password: data.password,
             });
 
-            console.log(result);
-
             if (result?.error) {
                 console.log("Ocurrio un error", JSON.parse(result.error));
                 handleError(JSON.parse(result.error))
+                toast.error("Ocurrio un error", JSON.parse(result.error))
                 return;
             }
+            toast.success("El inicio de session fue exitoso")
             router.push("/dashboard/projects")
             router.refresh()
         } catch (error) {

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "./auth-provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +20,7 @@ export default function RootLayout({
         className="bg-gradient-to-b from-blue-200 to-white w-full"
       >
         <AuthProvider >{children} </AuthProvider>
+        <ToastContainer />
       </body>
     </html>
   );

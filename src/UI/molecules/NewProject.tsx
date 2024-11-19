@@ -10,7 +10,7 @@ import Input from '@mui/joy/Input'
 import Textarea from '@mui/joy/Textarea'
 import { IPostProject } from "@/app/core/application/dto"
 
-const postServiceSchema = yup.object().shape({
+const postProjectSchema = yup.object().shape({
     title: yup.string().required("The title is required"),
     description: yup
         .string()
@@ -26,14 +26,14 @@ const postServiceSchema = yup.object().shape({
         .matches(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format. Use YYYY-MM-DD."),
 })
 
-interface PostServiceModalProps {
+interface PostProjectModalProps {
     isOpen: boolean
     onClose: () => void
     onSubmit: (data: IPostProject) => void
     initialData?: IPostProject | null
 }
 
-export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose, onSubmit, initialData }) => {
+export const ProjectModal: React.FC<PostProjectModalProps> = ({ isOpen, onClose, onSubmit, initialData }) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const {
@@ -43,7 +43,7 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
         reset,
     } = useForm<IPostProject>({
         mode: "onChange",
-        resolver: yupResolver(postServiceSchema),
+        resolver: yupResolver(postProjectSchema),
     })
 
     React.useEffect(() => {
@@ -52,7 +52,7 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
         }
     }, [initialData, reset])
 
-    const handlePostService = async (data: IPostProject) => {
+    const handlePostProject = async (data: IPostProject) => {
         setIsLoading(true)
         try {
             await onSubmit(data) 
@@ -71,7 +71,7 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
                 <div className="flex justify-between items-center p-6 border-b border-blue-300">
-                    <h2 className="text-2xl font-semibold text-gray-800">{initialData ? "Edit Service" : "Add Service"}</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800">{initialData ? "Edit Project" : "Add Project"}</h2>
                     <Button
                         color="danger"
                         variant="outlined"
@@ -82,10 +82,10 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
                         <IoIosCloseCircleOutline className="w-6 h-6" />
                     </Button>
                 </div>
-                <form onSubmit={handleSubmit(handlePostService)} className="p-6 space-y-4">
+                <form onSubmit={handleSubmit(handlePostProject)} className="p-6 space-y-4">
                     <div>
                         <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-                            Service Title
+                            Project Title
                         </label>
                         <Controller
                             name="title"
@@ -97,7 +97,7 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
                                     type="text"
                                     id="title"
                                     className="w-full text-gray-300"
-                                    placeholder="Enter the service title"
+                                    placeholder="Enter the Project title"
                                 />
                             )}
                         />
@@ -177,7 +177,7 @@ export const ProjectModal: React.FC<PostServiceModalProps> = ({ isOpen, onClose,
                             : "bg-black hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                             } transition-colors`}
                     >
-                        {isLoading ? "Saving..." : initialData ? "Save Changes" : "Add Service"}
+                        {isLoading ? "Saving..." : initialData ? "Save Changes" : "Add Project"}
                     </Button>
                 </form>
             </div>
